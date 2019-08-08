@@ -10,6 +10,6 @@ setup(
     author_email="adrien.suau@protonmail.com",
     description="Get information about currently opened tabs in Firefox",
     install_requires=["lz4"],
-    extra_requires={"dev": ["black"]},
+    extra_require={"dev": ["black"]},
     entry_points={"console_scripts": ["firotab = firefox_open_tabs:main"]},
 )
