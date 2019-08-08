@@ -68,11 +68,31 @@ def main():
     parser = argparse.ArgumentParser(
         description="Get information about currently opened Firefox tabs."
     )
-    parser.parse_args()
+    parser.add_argument(
+        "--url",
+        help="Filter output to print only opened tabs' URLs.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--title",
+        help="Filter output to print only opened tabs' titles.",
+        action="store_true",
+    )
+    args = parser.parse_args()
 
-    from pprint import pprint
+    if args.url and args.title:
+        print("'--url' and '--title' options should not be used alongside.")
+        exit()
 
-    pprint(get_current_opened_tab_information())
+    opened_tabs = get_current_opened_tab_information()
+    if not args.url and not args.title:
+        from pprint import pprint
+
+        pprint(opened_tabs)
+    elif args.url and not args.title:
+        print("\n".join([tab["url"] for tab in opened_tabs]))
+    elif args.title and not args.url:
+        print("\n".join([tab["title"] for tab in opened_tabs]))
 
 
 if __name__ == "__main__":
